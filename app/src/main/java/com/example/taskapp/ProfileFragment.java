@@ -26,7 +26,7 @@ import java.io.IOException;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private ActivityResultLauncher<String> mGetContent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,33 +41,22 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.imageView.setOnClickListener(v -> {
-            getImage();
+            pickImage();
         });
-
         setImage();
     }
 
     private void setImage() {
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                Intent intent = result.getData();
-                if (intent != null){
-                    ContentResolver contentResolver = requireActivity().getContentResolver();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, intent.getData());
-                        binding.imageView.setImageBitmap(bitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri uri) {
+                        binding.imageView.setImageURI(uri);
                     }
-                }
-            }
-        });
+                });
     }
 
-    private void getImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        activityResultLauncher.launch(intent);
+    private void pickImage() {
+        mGetContent.launch("image/*");
     }
 }

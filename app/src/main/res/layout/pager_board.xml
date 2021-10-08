@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <ImageView
+        android:id="@+id/logoIv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/ic_launcher_round"
+        />
+
+    <TextView
+        android:id="@+id/textTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="32sp"
+        android:layout_marginTop="64dp"
+        />
+
+    <TextView
+        android:id="@+id/textDescTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description Description Description Description Description Description"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:text="Start"
+        android:layout_margin="25dp"
+        />
+
+</LinearLayout>

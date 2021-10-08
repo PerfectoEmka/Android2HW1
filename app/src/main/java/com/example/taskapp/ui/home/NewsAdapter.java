@@ -1,6 +1,5 @@
 package com.example.taskapp.ui.home;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,33 +7,36 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.taskapp.News;
+import com.example.taskapp.models.News;
 import com.example.taskapp.databinding.ItemNewsBinding;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     private ArrayList<News> list = new ArrayList<>();
     OnLongClick onLongClick;
 
-    void addItem(News news){
+    public void initListeners(OnLongClick onLongClick){
+        this.onLongClick = onLongClick;
+    }
+
+    public News getItem(int position){
+        return list.get(position);
+    }
+
+    public void addItem(News news){
         list.add(0, news);
         notifyItemInserted(0); // обновляет 1 элемент
         //notifyDataSetChanged(); обновляет все элементы
         notifyDataSetChanged();
     }
 
-    public void initListeners(OnLongClick onLongClick){
-        this.onLongClick = onLongClick;
-    }
 
     public void removeItem(int position){
         list.remove(position);
         notifyDataSetChanged();
+        notifyItemRemoved(position);
     }
 
     public void editItem(int position, News news){
@@ -68,11 +70,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         }
 
         public void onBind(News s, int position) {
-            if (((float) position % 2)==0){
+            if (((float) position % 2)!=0){
                 binding.container.setBackgroundColor(Color.GRAY);
             }
             binding.titleTv.setText(s.getTitle());
-            binding.timeTv.setText(getCurrentTime());
+            binding.timeTv.setText(s.getDate());
 
             itemView.setOnLongClickListener(view -> {
                     onLongClick.OnLongClick(position);
@@ -80,14 +82,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             });
 
             itemView.setOnClickListener(view -> {
-                onLongClick.OnClick(list.get(position), position);
+                onLongClick.OnClick(position);
             });
-        }
-
-        private String getCurrentTime(){
-            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("h:mm a");
-            String date = df.format(Calendar.getInstance().getTime());
-            return date;
         }
     }
 
@@ -96,6 +92,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     public interface OnLongClick {
         public void OnLongClick(int position);
-        public void OnClick(News news ,int position);
+        public void OnClick(int position);
     }
 }

@@ -3,7 +3,6 @@ package com.example.taskapp.ui.home;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,10 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.taskapp.News;
+import com.example.taskapp.models.News;
 import com.example.taskapp.R;
 import com.example.taskapp.databinding.FragmentHomeBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 public class HomeFragment extends Fragment implements NewsAdapter.OnLongClick{
 
@@ -53,9 +50,9 @@ public class HomeFragment extends Fragment implements NewsAdapter.OnLongClick{
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 News news = (News) result.getSerializable("news");
                 int position = result.getInt("position");
-                boolean bool = result.getBoolean("bool");
+                boolean isEdited = result.getBoolean("bool");
                 // Log.e("HomeFragment Sent text", "text = " + news.getTitle()); // logCat
-                if (bool){
+                if (isEdited){
                     adapter.editItem(position, news);
                 } else {
                     adapter.addItem(news);
@@ -79,7 +76,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.OnLongClick{
     public void OnLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
         dialog.setTitle("Attention !!")
-                .setMessage("Delete item ?")
+                .setMessage("Delete item ? " + "\"" + adapter.getItem(position).getTitle() + "\"")
                 .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -96,10 +93,10 @@ public class HomeFragment extends Fragment implements NewsAdapter.OnLongClick{
     }
 
     @Override
-    public void OnClick(News news, int position) {
+    public void OnClick(int position) {
         Bundle b = new Bundle();
         b.putInt("position", position);
-        b.putSerializable("news", news);
+        b.putSerializable("news", adapter.getItem(position));
         getParentFragmentManager().setFragmentResult("rk_edit_news", b);
         openFragment();
     }

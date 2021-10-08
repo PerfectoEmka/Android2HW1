@@ -1,5 +1,6 @@
 package com.example.taskapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,16 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.taskapp.databinding.FragmentNewsBinding;
+import com.example.taskapp.models.News;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
 
 public class NewsFragment extends Fragment {
@@ -57,7 +61,9 @@ public class NewsFragment extends Fragment {
 
     private void sendData() {
         String txt = Objects.requireNonNull(binding.editText.getText()).toString();
-        News news = new News(txt);
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("h:mm a");
+        String time = df.format(Calendar.getInstance().getTime());
+        News news = new News(txt, time);
         Bundle b = new Bundle();
         b.putInt("position", position);
         b.putBoolean("bool", bool);

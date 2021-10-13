@@ -1,12 +1,8 @@
 package com.example.taskapp;
 
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -14,14 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.taskapp.databinding.FragmentProfileBinding;
-
-import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
@@ -40,10 +37,48 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.imageView.setOnClickListener(v -> {
+        setLocalContent();
+        initEditTextListeners();
+
+        binding.avatarIv.setOnClickListener(v -> {
             pickImage();
         });
         setImage();
+    }
+
+    private void initEditTextListeners() {
+        binding.nameEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Prefs prefs = new Prefs(requireContext());
+                prefs.saveName(editable.toString());
+                Toast.makeText(requireContext(), editable.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setLocalContent() {
+        Prefs prefs = new Prefs(requireContext());
+        String uri = prefs.getImage();
+        String name = prefs.getName();
+
+        Glide.with(requireActivity())
+                .load(uri)
+                .circleCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(binding.avatarIv);
+
+        binding.nameEt.setText(name);
     }
 
     private void setImage() {
@@ -51,7 +86,13 @@ public class ProfileFragment extends Fragment {
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
-                        binding.imageView.setImageURI(uri);
+                        Glide.with(requireActivity())
+                                .load(uri)
+                                .circleCrop()
+                                .placeholder(R.drawable.ic_launcher_foreground)
+                                .into(binding.avatarIv);
+                        Prefs prefs = new Prefs(requireContext());
+                        prefs.saveAvatarImage(uri);
                     }
                 });
     }

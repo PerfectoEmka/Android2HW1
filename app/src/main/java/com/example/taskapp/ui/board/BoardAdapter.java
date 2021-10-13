@@ -10,13 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.taskapp.R;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
 
     private String[] title = new String[] {"Fast","Free","Powerful","Secure"};
-    private int[] logo = new int[] {R.drawable.fast,R.drawable.free,R.drawable.powerful,R.drawable.secure};
     private String[] description = new String[] {"Faster then WhatsApp","Completely free", "Stronger then WhatsApp", "Better security then WhatsApp"};
+    private int[] animations = new int[] {R.raw.fast_animation, R.raw.free_animation, R.raw.powerful_animation, R.raw.secure_animation};
     private OnClick onClick;
 
     public void initListener(OnClick onClick){
@@ -43,22 +44,23 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView titleTv;
-        private ImageView logiIv;
+        private LottieAnimationView lottieAnimationView;
         private TextView descriptionTv;
         private Button startBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTv = itemView.findViewById(R.id.textTitleTv);
-            logiIv = itemView.findViewById(R.id.logoIv);
             descriptionTv = itemView.findViewById(R.id.textDescTv);
             startBtn = itemView.findViewById(R.id.startBtn);
+            lottieAnimationView = itemView.findViewById(R.id.fastAnimation);
         }
 
         public void onBind(int position) {
             titleTv.setText(title[position]);
             descriptionTv.setText(description[position]);
-            logiIv.setImageResource(logo[position]);
+            lottieAnimationView.setAnimation(animations[position]);
+
             if (position == title.length - 1){
                 startBtn.setVisibility(View.VISIBLE);
             } else {startBtn.setVisibility(View.GONE);}

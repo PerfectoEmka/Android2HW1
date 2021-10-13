@@ -1,13 +1,14 @@
 package com.example.taskapp.ui.board;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.PluralsRes;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -15,15 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.taskapp.Prefs;
 import com.example.taskapp.R;
 import com.example.taskapp.databinding.FragmentBoardBinding;
-import com.example.taskapp.databinding.FragmentNewsBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 public class BoardFragment extends Fragment implements BoardAdapter.OnClick {
 
-    FragmentBoardBinding binding;
+    private FragmentBoardBinding binding;
+    private DotsIndicator dot;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,12 +51,14 @@ public class BoardFragment extends Fragment implements BoardAdapter.OnClick {
         });
 
         binding.skipBtn.setOnClickListener(v -> {
-            close();
+            closeFragment();
         });
 
     }
 
-    private void close(){
+    private void closeFragment(){
+        Prefs prefs = new Prefs(requireContext());
+        prefs.saveBoardState();
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
         navController.navigateUp();
     }
@@ -63,13 +68,8 @@ public class BoardFragment extends Fragment implements BoardAdapter.OnClick {
         adapter.initListener(this);
         ViewPager2 viewPager2 = binding.viewPager;
         viewPager2.setAdapter(adapter);
-
-        new TabLayoutMediator(binding.tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setIcon(R.drawable.dot);
-            }
-        }).attach();
+        dot = binding.dotsIndicator;
+        dot.setViewPager2(viewPager2);
     }
 
     private void closeApp(){
@@ -78,6 +78,6 @@ public class BoardFragment extends Fragment implements BoardAdapter.OnClick {
 
     @Override
     public void OnClick() {
-        close();
+        closeFragment();
     }
 }

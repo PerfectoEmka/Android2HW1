@@ -12,7 +12,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.taskapp.R;
 import com.example.taskapp.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -58,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (true) {
+        Prefs prefs = new Prefs(this);
+        if (!prefs.isBoardShown()) {
             navController.navigate(R.id.boardFragment);
         }
     }

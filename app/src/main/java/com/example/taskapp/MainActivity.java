@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.taskapp.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,11 +62,14 @@ public class MainActivity extends AppCompatActivity {
         if (!prefs.isBoardShown()) {
             navController.navigate(R.id.boardFragment);
         }
+
+        if(FirebaseAuth.getInstance().getCurrentUser() == null)
+            navController.navigate(R.id.loginFragment);
+
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         return navController.navigateUp();
     }
-
 }

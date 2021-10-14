@@ -1,9 +1,7 @@
 package com.example.taskapp;
 
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -15,7 +13,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.taskapp.databinding.FragmentProfileBinding;
@@ -62,7 +59,6 @@ public class ProfileFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 Prefs prefs = new Prefs(requireContext());
                 prefs.saveName(editable.toString());
-                Toast.makeText(requireContext(), editable.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -83,17 +79,14 @@ public class ProfileFragment extends Fragment {
 
     private void setImage() {
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                new ActivityResultCallback<Uri>() {
-                    @Override
-                    public void onActivityResult(Uri uri) {
-                        Glide.with(requireActivity())
-                                .load(uri)
-                                .circleCrop()
-                                .placeholder(R.drawable.ic_launcher_foreground)
-                                .into(binding.avatarIv);
-                        Prefs prefs = new Prefs(requireContext());
-                        prefs.saveAvatarImage(uri);
-                    }
+                uri -> {
+                    Glide.with(requireActivity())
+                            .load(uri)
+                            .circleCrop()
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .into(binding.avatarIv);
+                    Prefs prefs = new Prefs(requireContext());
+                    prefs.saveAvatarImage(uri);
                 });
     }
 

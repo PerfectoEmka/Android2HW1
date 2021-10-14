@@ -37,4 +37,15 @@
         android:name="com.example.taskapp.ui.board.BoardFragment"
         android:label="fragment_board"
         tools:layout="@layout/fragment_board" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.taskapp.MainActivity"
+        android:label="MainActivity" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.taskapp.ui.auth.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+
 </navigation>

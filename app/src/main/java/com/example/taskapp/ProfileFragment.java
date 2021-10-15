@@ -1,5 +1,6 @@
 package com.example.taskapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -7,15 +8,24 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.taskapp.databinding.FragmentProfileBinding;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApi;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment {
 
@@ -41,6 +51,17 @@ public class ProfileFragment extends Fragment {
             pickImage();
         });
         setImage();
+
+        binding.btnSignOut.setOnClickListener(v -> {
+            signOut();
+        });
+    }
+
+    @SuppressLint("ResourceType")
+    private void signOut() {
+        // [START auth_sign_out]
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(requireActivity(), "SignOut", Toast.LENGTH_SHORT).show();
     }
 
     private void initEditTextListeners() {

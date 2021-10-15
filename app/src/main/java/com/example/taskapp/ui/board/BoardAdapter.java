@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     private String[] title = new String[] {"Fast","Free","Powerful","Secure"};
     private String[] description = new String[] {"Faster then WhatsApp","Completely free", "Stronger then WhatsApp", "Better security then WhatsApp"};
-    // private int[] animations = new int[] {R.raw.fast_animation, R.raw.free_animation, R.raw.powerful_animation, R.raw.secure_animation};
+    private int[] animations = new int[] {R.raw.fast_animation, R.raw.free_animation, R.raw.powerful_animation, R.raw.secure_animation};
     private OnClick onClick;
 
     public void initListener(OnClick onClick){
@@ -59,7 +58,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
         public void onBind(int position) {
             titleTv.setText(title[position]);
             descriptionTv.setText(description[position]);
-           // lottieAnimationView.setAnimation(animations[position]);
+            lottieAnimationView.setAnimation(animations[position]);
 
             if (position == title.length - 1){
                 startBtn.setVisibility(View.VISIBLE);

@@ -197,5 +197,13 @@
         android:layout_marginHorizontal="30dp"
         android:text="I'm a cool girl and i like to study science. Lorem ipsum dolor sit amet, consectetur adipiscing elit popup."
         />
+    <Button
+        android:id="@+id/btnSignOut"
+        android:text="Sign Out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTv"
+        android:layout_margin="16dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

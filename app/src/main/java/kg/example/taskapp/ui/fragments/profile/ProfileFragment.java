@@ -1,6 +1,8 @@
-package com.example.taskapp;
+package kg.example.taskapp.ui.fragments.profile;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,18 +21,20 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.taskapp.databinding.FragmentProfileBinding;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
+import kg.example.taskapp.preference.Prefs;
+import kg.geektech.taskapp35.R;
+import kg.geektech.taskapp35.databinding.FragmentProfileBinding;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
     private ActivityResultLauncher<String> mGetContent;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = mAuth.getCurrentUser();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,13 +59,43 @@ public class ProfileFragment extends Fragment {
         binding.btnSignOut.setOnClickListener(v -> {
             signOut();
         });
+
+        binding.btnSignIn.setOnClickListener(view1 -> {
+            signIn();
+        });
+    }
+
+    private void signIn() {
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigate(R.id.loginFragment);
     }
 
     @SuppressLint("ResourceType")
     private void signOut() {
-        // [START auth_sign_out]
-        FirebaseAuth.getInstance().signOut();
-        Toast.makeText(requireActivity(), "SignOut", Toast.LENGTH_SHORT).show();
+        if (user != null){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(requireActivity());
+            dialog.setTitle("Attention !")
+                    .setMessage("Sign out? ")
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            FirebaseAuth.getInstance().signOut();
+                            Toast.makeText(requireActivity(), "SignOut: " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+                            signOutUser();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    }).show() ;
+        }
+    }
+
+    private void signOutUser() {
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+        navController.navigate(R.id.loginFragment);
     }
 
     private void initEditTextListeners() {

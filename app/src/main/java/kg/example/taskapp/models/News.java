@@ -1,15 +1,18 @@
-package com.example.taskapp.models;
+package kg.example.taskapp.models;
 
 import java.io.Serializable;
 
 public class News implements Serializable {
 
     private String title;
-    private String date;
+    private long createdAt;
 
-    public News(String title, String date) {
+    public News(){
+
+    }
+
+    public News(String title) {
         this.title = title;
-        this.date = date;
     }
 
     public String getTitle() {
@@ -20,11 +23,11 @@ public class News implements Serializable {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public long getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
     }
 }

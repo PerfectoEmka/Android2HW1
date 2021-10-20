@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment"
+    tools:context="kg.example.taskapp.ui.fragments.profile.ProfileFragment"
     android:background="#DCD9D9">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -198,11 +198,20 @@
         android:text="I'm a cool girl and i like to study science. Lorem ipsum dolor sit amet, consectetur adipiscing elit popup."
         />
     <Button
+        android:id="@+id/btnSignIn"
+        android:text="Sign In"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTv"
+        android:layout_margin="16dp"
+        />
+
+    <Button
         android:id="@+id/btnSignOut"
         android:text="Sign Out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/descriptionTv"
+        app:layout_constraintTop_toBottomOf="@id/btnSignIn"
         android:layout_margin="16dp"
         />
 

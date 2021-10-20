@@ -1,4 +1,4 @@
-package com.example.taskapp.ui.home;
+package kg.example.taskapp.ui.fragments.home;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,10 +14,14 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.taskapp.models.News;
-import com.example.taskapp.R;
-import com.example.taskapp.databinding.FragmentHomeBinding;
+import kg.example.taskapp.models.News;
+import kg.geektech.taskapp35.R;
+import kg.geektech.taskapp35.databinding.FragmentHomeBinding;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment implements NewsAdapter.OnLongClick{
 
@@ -28,6 +32,7 @@ public class HomeFragment extends Fragment implements NewsAdapter.OnLongClick{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new NewsAdapter();
+        readData();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -90,6 +95,18 @@ public class HomeFragment extends Fragment implements NewsAdapter.OnLongClick{
                         dialogInterface.dismiss();
                     }
                 }).show() ;
+    }
+
+    private void readData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("news").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<News> list = queryDocumentSnapshots.toObjects(News.class);
+            adapter.addItems(list);
+        });
+    }
+
+    private void readDataLive() {
+
     }
 
     @Override

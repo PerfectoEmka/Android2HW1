@@ -1,6 +1,5 @@
-package com.example.taskapp;
+package kg.example.taskapp.ui.fragments.news;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,13 +12,14 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.taskapp.databinding.FragmentNewsBinding;
-import com.example.taskapp.models.News;
+import kg.example.taskapp.models.News;
+import kg.geektech.taskapp35.R;
+import kg.geektech.taskapp35.databinding.FragmentNewsBinding;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Objects;
 
 public class NewsFragment extends Fragment {
@@ -43,7 +43,7 @@ public class NewsFragment extends Fragment {
         getData();
 
         binding.btnSave.setOnClickListener(view1 -> {
-            sendData();
+            saveData();
         });
     }
 
@@ -59,17 +59,30 @@ public class NewsFragment extends Fragment {
         });
     }
 
-    private void sendData() {
+    private void saveData() {
         String txt = Objects.requireNonNull(binding.editText.getText()).toString();
-        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("h:mm a");
-        String time = df.format(Calendar.getInstance().getTime());
-        News news = new News(txt, time);
+        News news = new News(txt);
+        news.setCreatedAt(System.currentTimeMillis());
+
+        saveToFireStore(news);
+
         Bundle b = new Bundle();
         b.putInt("position", position);
         b.putBoolean("bool", bool);
         b.putSerializable("news", news);
         getParentFragmentManager().setFragmentResult("rk_news", b);
-        close();
+    }
+
+    private void saveToFireStore(News news) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("news").add(news).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Error " + task.getException(), Toast.LENGTH_SHORT).show();
+            }
+            close();
+        });
     }
 
     private void close() {

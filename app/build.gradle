@@ -7,7 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.taskapp"
+        applicationId "kg.geektech.taskapp35"
         minSdk 21
         targetSdk 31
         versionCode 1
@@ -34,8 +34,10 @@ android {
 dependencies {
     // FireBase
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
 
 
     implementation 'com.tbuonomo:dotsindicator:4.2'// Dots indicator

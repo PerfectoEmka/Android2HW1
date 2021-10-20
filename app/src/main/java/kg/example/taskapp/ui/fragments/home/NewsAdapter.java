@@ -1,4 +1,4 @@
-package com.example.taskapp.ui.home;
+package kg.example.taskapp.ui.fragments.home;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.taskapp.models.News;
-import com.example.taskapp.databinding.ItemNewsBinding;
+import kg.example.taskapp.models.News;
+import kg.geektech.taskapp35.databinding.ItemNewsBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
@@ -60,6 +61,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return list.size();
     }
 
+    public void addItems(List<News> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ItemNewsBinding binding;
@@ -74,7 +80,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 binding.container.setBackgroundColor(Color.GRAY);
             }
             binding.titleTv.setText(s.getTitle());
-            binding.timeTv.setText(s.getDate());
+            //binding.timeTv.setText( s.getCreatedAt());
 
             itemView.setOnLongClickListener(view -> {
                     onLongClick.OnLongClick(position);

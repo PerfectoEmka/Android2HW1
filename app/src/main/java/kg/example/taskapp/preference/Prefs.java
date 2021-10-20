@@ -1,4 +1,4 @@
-package com.example.taskapp;
+package kg.example.taskapp.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;

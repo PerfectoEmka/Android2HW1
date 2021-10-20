@@ -1,4 +1,4 @@
-package com.example.taskapp.ui.auth;
+package kg.example.taskapp.ui.fragments.auth;
 
 import static android.content.ContentValues.TAG;
 
@@ -19,21 +19,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.taskapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.util.concurrent.Executor;
+import kg.geektech.taskapp35.R;
 
 public class LoginFragment extends Fragment {
 
@@ -56,11 +53,6 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void gg() {
-        FirebaseAuth.getInstance().signOut();
-
-    }
-
     private void googleSignIn() {
         Intent intent = mGoogleSignInClient.getSignInIntent();
         resultLauncher.launch(intent);
@@ -73,8 +65,9 @@ public class LoginFragment extends Fragment {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success");
-                        Toast.makeText(requireActivity(), "Sign in: Success", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
+                        assert user != null;
+                        Toast.makeText(requireActivity(), "Sign in: Success user: " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         updateUI(user);
                     } else {
                         // If sign in fails, display a message to the user.
@@ -89,6 +82,8 @@ public class LoginFragment extends Fragment {
         if (user != null){
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
             navController.navigateUp();
+        } else {
+
         }
     }
 

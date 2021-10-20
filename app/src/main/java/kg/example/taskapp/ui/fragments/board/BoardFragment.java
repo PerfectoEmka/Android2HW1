@@ -1,12 +1,10 @@
-package com.example.taskapp.ui.board;
+package kg.example.taskapp.ui.fragments.board;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.PluralsRes;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,11 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.taskapp.Prefs;
-import com.example.taskapp.R;
-import com.example.taskapp.databinding.FragmentBoardBinding;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import kg.example.taskapp.preference.Prefs;
+import kg.geektech.taskapp35.R;
+import kg.geektech.taskapp35.databinding.FragmentBoardBinding;
+
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 public class BoardFragment extends Fragment implements BoardAdapter.OnClick {

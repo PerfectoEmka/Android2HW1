@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.board.BoardFragment">
+    tools:context="kg.example.taskapp.ui.fragments.board.BoardFragment">
 
     <Button
         android:id="@+id/skipBtn"
         android:layout_width="80dp"
         android:layout_height="40dp"
-        android:text="Scip"
+        android:text="Skip"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

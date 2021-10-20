@@ -1,4 +1,4 @@
-package com.example.taskapp.ui.board;
+package kg.example.taskapp.ui.fragments.board;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.taskapp.R;
+
+import kg.geektech.taskapp35.R;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
 

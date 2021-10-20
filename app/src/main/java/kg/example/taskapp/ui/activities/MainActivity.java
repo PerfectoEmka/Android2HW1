@@ -1,4 +1,4 @@
-package com.example.taskapp;
+package kg.example.taskapp.ui.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +12,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.taskapp.databinding.ActivityMainBinding;
+import kg.example.taskapp.preference.Prefs;
+import kg.geektech.taskapp35.R;
+import kg.geektech.taskapp35.databinding.ActivityMainBinding;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         BottomNavigationView bottomNavigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile)
                 .build();
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(FirebaseAuth.getInstance().getCurrentUser() == null)
             navController.navigate(R.id.loginFragment);
-
     }
 
     @Override

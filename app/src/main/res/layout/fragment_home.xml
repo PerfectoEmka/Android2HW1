@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kg.example.taskapp.ui.fragments.home.HomeFragment">
+    tools:context="kg.geektech.taskapp35.ui.fragments.home.HomeFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -22,6 +22,7 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
+        android:padding="10dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="kg.example.taskapp.ui.fragments.profile.ProfileFragment"
+    tools:context="kg.geektech.taskapp35.ui.fragments.profile.ProfileFragment"
     android:background="#DCD9D9">
 
     <androidx.constraintlayout.widget.ConstraintLayout
